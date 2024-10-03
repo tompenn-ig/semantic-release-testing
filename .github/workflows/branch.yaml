@@ -9,14 +9,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
     timeout-minutes: 20
-    environment:
-      name: publish
-
-    permissions:
-      contents: write
-      issues: write
-      pull-requests: write
-      id-token: write
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -37,6 +29,20 @@ jobs:
           npm i
           npm run build
 
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    needs:
+      - build
+    environment:
+      name: publish
+
+    permissions:
+      contents: write
+      issues: write
+      pull-requests: write
+      id-token: write
+    steps:
       - name: Publish
         env:
           GITHUB_TOKEN: ${{secrets.GH_SECRET}}
