@@ -35,4 +35,4 @@ jobs:
       - name: Publish
         env:
           GITHUB_TOKEN: ${{secrets.GH_SECRET}}
-          run: npx semantic-release
+        run: npx semantic-release
