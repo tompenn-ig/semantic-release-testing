@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+    "composite": true,
+    "declaration": true,
+    "outDir": "./lib",
+    "module": "ESNext",
+    "target": "es2022",
+    "lib": ["dom", "dom.iterable", "es2022"],
+    "types": ["vitest/globals"],
+    "jsx": "react-jsx",
+    "noEmit": true,
+    "moduleResolution": "bundler",
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitAny": true,
+    "strict": true,
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "allowImportingTsExtensions": true,
+    "isolatedModules": true,
+    "rootDir": "src",
+    "paths": {
+      "~/theme/*": ["./src/theme/assets/*"],
+      "~/styles/*": ["./src/theme/styles/*"],
+      "~/decorators/*": ["./.storybook/decorators/*"]
+    }
+  },
+  "include": ["src"]
+}
