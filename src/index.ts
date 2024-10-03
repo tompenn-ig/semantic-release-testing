@@ -1,1 +1,3 @@
-export * from './components';
+export const HelloWorld = () => {
+
+}
