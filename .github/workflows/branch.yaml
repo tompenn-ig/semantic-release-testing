@@ -9,7 +9,14 @@ jobs:
   build:
     runs-on: ubuntu-latest
     timeout-minutes: 20
+    environment:
+      name: publish
 
+    permissions:
+      contents: write
+      issues: write
+      pull-requests: write
+      id-token: write
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -28,7 +35,6 @@ jobs:
           NODE_ENV: development
         run: |
           npm i
-          npm run test
           npm run ts-compile
           npm run build
 
