@@ -59,8 +59,8 @@ jobs:
         with:
           name: build
           path: .
-          
+
       - name: Publish
         env:
           GITHUB_TOKEN: ${{secrets.GH_SECRET}}
-        run: npx semantic-release
+        run: npm i -g semantic-release && npx semantic-release
