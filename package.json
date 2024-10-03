@@ -29,7 +29,7 @@
   },
   "homepage": "https://github.com/incentivegames/ig-arcade-common#readme",
   "scripts": {
-    "test": "vitest"
+    "build": "vite build"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",

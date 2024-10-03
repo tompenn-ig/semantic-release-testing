@@ -35,7 +35,6 @@ jobs:
           NODE_ENV: development
         run: |
           npm i
-          npm run ts-compile
           npm run build
 
       - name: Publish
