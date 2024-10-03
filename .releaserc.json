@@ -4,8 +4,9 @@
     "master",
     "main",
     {
-      "name": "beta",
-      "prerelease": true
+      "name": "dev",
+      "channel": "pre/rc",
+      "prerelease": "rc"
     }
   ]
 }
