@@ -4,6 +4,8 @@ on:
     # Sequence of patterns matched against refs/heads
     branches:
       - '**'      # Push events on all other branches
+env:
+  GH_TOKEN: ${{secrets.GH_SECRET}}
 
 jobs:
   build:
@@ -38,5 +40,5 @@ jobs:
 
       - name: Publish
         env:
-          GITHUB_TOKEN: ${{secrets.GH_SECRET}}
+          GH_TOKEN: ${{secrets.GH_SECRET}}
         run: npx semantic-release
