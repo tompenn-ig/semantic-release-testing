@@ -1,5 +1,5 @@
 {
-  "name": "semantic-release-testing",
+  "name": "@tompenn-ig/igsemantic-release-testing",
   "version": "0.0.1",
   "description": "Semantic release testing",
   "exports": {
@@ -17,6 +17,9 @@
   "type": "module",
   "engines": {
     "node": "20.*"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
   },
   "repository": {
     "type": "git",
