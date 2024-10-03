@@ -20,14 +20,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/incentivegames/ig-arcade-common.git"
+    "url": "git+https://github.com/tompenn-ig/semantic-release-testing.git"
   },
   "author": "tompenn-ig",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/incentivegames/ig-arcade-common/issues"
+    "url": "https://github.com/tompenn-ig/semantic-release-testing/issues"
   },
-  "homepage": "https://github.com/incentivegames/ig-arcade-common#readme",
+  "homepage": "https://github.com/tompenn-ig/semantic-release-testing#readme",
   "scripts": {
     "build": "vite build"
   },
