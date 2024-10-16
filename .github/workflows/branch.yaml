@@ -60,7 +60,7 @@ jobs:
             const features = releaseNote.slice(1, releaseNote.length);
             const res = releaseNote.join('\n');
             const heading = '## Semantic Release Report';
-            const body = !releaseNote.length || !res ? '### No release would be generated.' : [heading, `### 🚀 This PR will release v${version.replace('# ', '')}`, features.join('\n')].join('\n');
+            const body = !releaseNote.length || !res ? '### No release would be generated.' : [heading, `### 🚀 This PR will release v${version.replace('# ', '')}`, features.map((line) => line.trim()).join('\n').replaceAll('* ', ' - ')].join('\n');
             
             // create new comment for release note
             github.issues.createComment({
