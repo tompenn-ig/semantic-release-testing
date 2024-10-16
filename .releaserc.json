@@ -4,7 +4,7 @@
     "master",
     "main",
     {
-      "name": "dev",
+      "name": "*",
       "channel": "pre/rc",
       "prerelease": "rc"
     }
