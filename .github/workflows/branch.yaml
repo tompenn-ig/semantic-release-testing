@@ -1,9 +1,8 @@
 name: Branch
 on:
-  push:
-    # Sequence of patterns matched against refs/heads
-    branches:
-      - '**'      # Push events on all other branches
+  pull_request:
+    types: [opened, edited, synchronize, reopened]
+
 env:
   GH_TOKEN: ${{secrets.GH_SECRET}}
 
@@ -71,35 +70,9 @@ jobs:
             const SEMANTIC_RELEASE_BODY_HEADER = '## 📝 Semantic Release Report';
             const body = [SEMANTIC_RELEASE_BODY_HEADER, res].join('\n');
             
-            console.log(context.repo)
-            console.log(context.issue)
-            console.log(context)
-            
-            // get last comment
-            const comments = await github.issues.listComments({
-                issue_number: context.issue.number,
-                owner: context.repo.owner,
-                repo: context.repo.repo
-            });
-            
-            // find comments to delete
-            const commentsToDelete = comments.data.filter((comment) =>
-                comment.body.startsWith(SEMANTIC_RELEASE_BODY_HEADER)
-            );
-            
-            // delete comments
-            const prms = commentsToDelete.map((comment) =>
-                github.issues.deleteComment({
-                    comment_id: comment.id,
-                    owner: context.repo.owner,
-                    repo: context.repo.repo
-                })
-            );
-            
-            await Promise.all(prms);
             
             // create new comment for release note
-            github.issues.createComment({
+            github.rest.issues.createComment({
                 issue_number: context.issue.number,
                 owner: context.repo.owner,
                 repo: context.repo.repo,
