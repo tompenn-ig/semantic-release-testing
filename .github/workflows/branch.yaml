@@ -37,4 +37,10 @@ jobs:
       - name: Publish
         env:
           GH_TOKEN: ${{secrets.GH_SECRET}}
-        run: npx semantic-release
+        run: |
+          if [[ ${{ github.ref }} == 'refs/heads/main' ]]; then
+          npx semantic-release --extends ./release.config.js
+          elif [[ ${{ github.ref }} == 'refs/heads/beta' ]]; then
+          npx semantic-release --extends ./.releaserc.dev.json
+          fi
+          

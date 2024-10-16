@@ -8,22 +8,5 @@
       "channel": "pre/rc",
       "prerelease": "rc"
     }
-  ],
-  "plugins": [
-    "@semantic-release/commit-analyzer",
-    "@semantic-release/release-notes-generator",
-    "@semantic-release/changelog",
-    "@semantic-release/npm",
-    "@semantic-release/github",
-    "@semantic-release/git",
-    {
-      "path": "./comment-before-release.mjs"
-    },
-    [
-      "@semantic-release/github",
-      {
-        "successComment": "🎉 This PR has been released with version ${nextRelease.version}!"
-      }
-    ]
   ]
 }
