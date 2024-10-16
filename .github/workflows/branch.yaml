@@ -1,7 +1,6 @@
 name: Branch
 on:
   pull_request:
-    types: [opened, edited, synchronize, reopened]
 
 env:
   GH_TOKEN: ${{secrets.GH_SECRET}}
