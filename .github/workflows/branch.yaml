@@ -1,9 +1,7 @@
 name: Branch
 on:
-  push:
-    # Sequence of patterns matched against refs/heads
-    branches:
-      - '**'      # Push events on all other branches
+  pull_request:
+
 env:
   GH_TOKEN: ${{secrets.GH_SECRET}}
 
@@ -27,10 +25,6 @@ jobs:
         with:
           node-version: 20
 
-      - name: install rollup
-        run: |
-          npm install --global rollup
-
       - name: Run tests
         env:
           NODE_ENV: development
@@ -38,7 +32,54 @@ jobs:
           npm i
           npm run build
 
-      - name: Publish
-        env:
-          GH_TOKEN: ${{secrets.GH_SECRET}}
-        run: npx semantic-release
+      - name: Check semantic versioning
+        id: semantic-release
+        run: |
+          GITHUB_REF=${{ github.head_ref }}
+          npx semantic-release --no-ci --dry-run --plugins @semantic-release/commit-analyzer,@semantic-release/release-notes-generator --branches ${{ github.head_ref }} > output.txt
+          OUTPUT=$(cat output.txt | base64 -w 0)
+          echo "::set-output name=releaseNote::$OUTPUT"
+
+      - name: Report semantic versioning
+        uses: actions/github-script@v3
+        if: ${{ steps.semantic-release.outputs.releaseNote != '' }}
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            // build release note
+            const semanticReleaseOutput = Buffer.from('${{ steps.semantic-release.outputs.releaseNote }}', 'base64').toString('utf8');
+            const semanticReleaseLogMatch = /^[[0-9:\sAMPM]+\]\s\[semantic-release\].*$/;
+            const lines = semanticReleaseOutput.split('\n');
+            const lastSemanticReleaseLogIndex = [...lines]
+            .reverse()
+            .findIndex((line) => line.match(semanticReleaseLogMatch));
+            const releaseNoteIndex = lines.length - lastSemanticReleaseLogIndex;
+            const releaseNote = lines.slice(releaseNoteIndex);
+            // get version and remove everything after it
+            const version = releaseNote.slice(0, 1)[0].split('(')[0];
+            const rest = releaseNote.slice(1, releaseNote.length);
+            const heading = '## Semantic Release Report';
+            
+            const getBody = () => {
+              if (!releaseNote.length) return '### No release would be generated.';
+              const formatted = rest
+                .map((line) => {
+                  return line.trim().replace('(', '[').replace(' (', '](').replace('))', ')');
+                })
+                .join('\n')
+                .replaceAll('* ', ' - ')
+              return [heading, `### 🚀 This PR will release v${version.replace('# ', '')}`, formatted].join('\n');
+            }
+            
+            const body = getBody()
+            
+            // create new comment for release note
+            github.issues.createComment({
+                issue_number: context.issue.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                body
+            });
+      
+
+          
