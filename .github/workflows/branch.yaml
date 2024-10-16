@@ -57,10 +57,21 @@ jobs:
             const releaseNote = lines.slice(releaseNoteIndex);
             // get version and remove everything after it
             const version = releaseNote.slice(0, 1)[0].split('(')[0];
-            const features = releaseNote.slice(1, releaseNote.length);
-            const res = releaseNote.join('\n');
+            const rest = releaseNote.slice(1, releaseNote.length);
             const heading = '## Semantic Release Report';
-            const body = !releaseNote.length || !res ? '### No release would be generated.' : [heading, `### 🚀 This PR will release v${version.replace('# ', '')}`, features.map((line) => line.trim()).join('\n').replaceAll('* ', ' - ')].join('\n');
+            
+            const getBody = () => {
+              if (!releaseNote.length) return '### No release would be generated.';
+              const formatted = rest
+                .map((line) => {
+                  return line.trim().replace('(', '[').replace(' (', '](').replace('))', ')');
+                })
+                .join('\n')
+                .replaceAll('* ', ' - ')
+              return [heading, `### 🚀 This PR will release v${version.replace('# ', '')}`, formatted].join('\n');
+            }
+            
+            const body = getBody()
             
             // create new comment for release note
             github.issues.createComment({
