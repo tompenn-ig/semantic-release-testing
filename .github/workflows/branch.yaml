@@ -72,6 +72,7 @@ jobs:
             const body = [SEMANTIC_RELEASE_BODY_HEADER, res].join('\n');
             
             console.log(context.repo)
+            console.log(context.issue)
             
             // get last comment
             const comments = await github.issues.listComments({
