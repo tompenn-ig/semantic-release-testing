@@ -34,9 +34,16 @@ jobs:
           npm i
           npm run build
 
+      - name: Get Branch Name
+        id: get_branch
+        run: echo "branch_name=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
+
+      - name: Use Branch Name
+        run: echo "The current branch name is $branch_name"
+
       - name: Publish
         env:
           GH_TOKEN: ${{secrets.GH_SECRET}}
-        run: npx semantic-release --branches ${{env.BRANCH_NAME}} --dry-run
+        run: npx semantic-release --branches $branch_name --dry-run
 
           
