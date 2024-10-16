@@ -73,6 +73,7 @@ jobs:
             
             console.log(context.repo)
             console.log(context.issue)
+            console.log(context)
             
             // get last comment
             const comments = await github.issues.listComments({
