@@ -34,11 +34,15 @@ jobs:
           npm i
           npm run build
 
+      - name: Get Branch Name
+        id: get_branch
+        run: echo "branch_name=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
+
       - name: 🔬 Check semantic versioning
         id: semantic-release
         run: |
           GITHUB_REF=${{ github.head_ref }}
-          npx semantic-release --no-ci --dry-run --plugins @semantic-release/commit-analyzer,@semantic-release/release-notes-generator --branches ${{ github.head_ref }} > output.txt
+          npx semantic-release --no-ci --dry-run --plugins @semantic-release/commit-analyzer,@semantic-release/release-notes-generator --branches $branch_name > output.txt
           OUTPUT=$(cat output.txt | base64 -w 0)
           echo "::set-output name=releaseNote::$OUTPUT"
 
