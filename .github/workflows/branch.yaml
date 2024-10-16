@@ -71,6 +71,8 @@ jobs:
             const SEMANTIC_RELEASE_BODY_HEADER = '## 📝 Semantic Release Report';
             const body = [SEMANTIC_RELEASE_BODY_HEADER, res].join('\n');
             
+            console.log(conext.repo)
+            
             // get last comment
             const comments = await github.issues.listComments({
                 issue_number: context.issue.number,
