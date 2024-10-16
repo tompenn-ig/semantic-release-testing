@@ -27,10 +27,6 @@ jobs:
         with:
           node-version: 20
 
-      - name: install rollup
-        run: |
-          npm install --global rollup
-
       - name: Run tests
         env:
           NODE_ENV: development

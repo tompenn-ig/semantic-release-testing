@@ -1,4 +1,5 @@
-const {Octokit} = require("@octokit/rest");
+import {Octokit} from "@octokit/rest";
+
 
 async function commentBeforeRelease() {
     const octokit = new Octokit({

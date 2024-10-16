@@ -17,7 +17,7 @@
     "@semantic-release/github",
     "@semantic-release/git",
     {
-      "path": "./comment-before-release.js"
+      "path": "./comment-before-release.mjs"
     },
     [
       "@semantic-release/github",
